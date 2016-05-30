@@ -1,0 +1,14 @@
+strict digraph "" {
+"smoothing (spm)";
+"sinker (io)";
+"list_normalized_images (utility)";
+"reorient (spm)";
+"segmentation (spm)";
+"converter (spm)";
+"smoothing (spm)" -> "sinker (io)";
+"list_normalized_images (utility)" -> "smoothing (spm)";
+"reorient (spm)" -> "segmentation (spm)";
+"segmentation (spm)" -> "list_normalized_images (utility)";
+"segmentation (spm)" -> "sinker (io)";
+"converter (spm)" -> "reorient (spm)";
+}

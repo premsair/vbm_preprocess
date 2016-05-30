@@ -1,0 +1,18 @@
+digraph structs {
+node [shape=record];
+vbm_preprocessconverter [label="{IN}|{ converter | spm |  }|{OUT|<outoutfiles> out_files}"];
+vbm_preprocessreorient [label="{IN|<ininfile> in_file}|{ reorient | spm |  }|{OUT|<outoutfile> out_file}"];
+vbm_preprocesssegmentation [label="{IN|<inchannelfiles> channel_files}|{ segmentation | spm |  }|{OUT|<outmodulatedclassimages> modulated_class_images|<outnativeclassimages> native_class_images|<outnormalizedclassimages> normalized_class_images|<outtransformationmat> transformation_mat}"];
+vbm_preprocesslist_normalized_images [label="{IN|<innormalizedclassimages> normalized_class_images}|{ list_normalized_images | utility |  }|{OUT|<outlistnormimages> list_norm_images}"];
+vbm_preprocesssmoothing [label="{IN|<ininfiles> in_files}|{ smoothing | spm |  }|{OUT|<outsmoothedfiles> smoothed_files}"];
+vbm_preprocesssinker [label="{IN|<invbmspm12> vbm_spm12|<invbmspm121> vbm_spm12.@1|<invbmspm122> vbm_spm12.@2|<invbmspm123> vbm_spm12.@3|<invbmspm124> vbm_spm12.@4}|{ sinker | io |  }|{OUT}"];
+vbm_preprocessconverter:outoutfiles:e -> vbm_preprocessreorient:ininfile:w;
+vbm_preprocesslist_normalized_images:outlistnormimages:e -> vbm_preprocesssmoothing:ininfiles:w;
+vbm_preprocessreorient:outoutfile:e -> vbm_preprocesssegmentation:inchannelfiles:w;
+vbm_preprocesssegmentation:outmodulatedclassimages:e -> vbm_preprocesssinker:invbmspm12:w;
+vbm_preprocesssegmentation:outnativeclassimages:e -> vbm_preprocesssinker:invbmspm121:w;
+vbm_preprocesssegmentation:outnormalizedclassimages:e -> vbm_preprocesslist_normalized_images:innormalizedclassimages:w;
+vbm_preprocesssegmentation:outnormalizedclassimages:e -> vbm_preprocesssinker:invbmspm122:w;
+vbm_preprocesssegmentation:outtransformationmat:e -> vbm_preprocesssinker:invbmspm123:w;
+vbm_preprocesssmoothing:outsmoothedfiles:e -> vbm_preprocesssinker:invbmspm124:w;
+}
